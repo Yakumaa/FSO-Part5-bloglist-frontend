@@ -25,9 +25,6 @@ const Notification = ({ message, type }) => {
 
 const App = () => {
 	const [blogs, setBlogs] = useState([])
-	const [title, setTitle] = useState('')
-	const [author, setAuthor] = useState('')
-	const [url, setUrl] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 	const [user, setUser] = useState(null)
@@ -57,9 +54,6 @@ const App = () => {
 			blogFormRef.current.toggleVisibility()
 			blogService.create(blogObject).then((returnedBlog) => {
 				setBlogs(blogs.concat(returnedBlog))
-				setTitle('')
-				setAuthor('')
-				setUrl('')
 				setMessage(`A new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
 				setMessageType('success')
 				setTimeout(() => {
