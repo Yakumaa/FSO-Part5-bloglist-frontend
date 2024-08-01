@@ -69,6 +69,19 @@ const App = () => {
 		}
 	}
 
+	const updateBlog = async (id, blogObject) => {
+		try {
+			const returnedBlog = await blogService.edit(id, blogObject)
+			setBlogs(blogs.map((blog) => (blog.id !== id ? blog : returnedBlog)))
+		} catch (exception) {
+			setMessage(`Error updating blog: ${exception}`)
+			setMessageType('error')
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		}
+	}
+
 	const handleLogin = async (event) => {
 		event.preventDefault()
 
@@ -141,9 +154,9 @@ const App = () => {
 					<p>{user.name} logged-in</p>
 					<button onClick={handleLogout}>logout</button>
 					{blogFrom()}
-					{/* <BlogForm createBlog={addBlog} /> */}
+
 					{blogs.map((blog) => (
-						<Blog key={blog.id} blog={blog} />
+						<Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
 					))}
 				</div>
 			)}
