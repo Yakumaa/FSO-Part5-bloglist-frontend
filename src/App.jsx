@@ -72,7 +72,7 @@ const App = () => {
 	const updateBlog = async (id, blogObject) => {
 		try {
 			const returnedBlog = await blogService.edit(id, blogObject)
-			setBlogs(blogs.map((blog) => (blog.id !== id ? blog : returnedBlog)))
+			setBlogs(blogs.map((blog) => (blog.id !== id ? blog : { ...returnedBlog, user: blog.user })))
 		} catch (exception) {
 			setMessage(`Error updating blog: ${exception}`)
 			setMessageType('error')
