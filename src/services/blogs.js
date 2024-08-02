@@ -45,4 +45,9 @@ const edit = async (id, editObject) => {
 	return response.data
 }
 
-export default { getAll, create, edit, setToken }
+const deleteBlog = async (id) => {
+	const response = await axios.delete(`${baseUrl}/${id}`, config)
+	return response.data
+}
+
+export default { getAll, create, edit, deleteBlog, setToken }

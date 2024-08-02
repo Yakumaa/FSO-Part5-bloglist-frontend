@@ -82,6 +82,24 @@ const App = () => {
 		}
 	}
 
+	const deleteBlog = async (id) => {
+		try {
+			await blogService.deleteBlog(id)
+			setBlogs(sortBlogs(blogs.filter((blog) => blog.id !== id)))
+			setMessage(`Blog deleted`)
+			setMessageType('success')
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		} catch (exception) {
+			setMessage(`Error deleting blog: ${exception}`)
+			setMessageType('error')
+			setTimeout(() => {
+				setMessage(null)
+			}, 5000)
+		}
+	}
+
 	const handleLogin = async (event) => {
 		event.preventDefault()
 
@@ -160,7 +178,7 @@ const App = () => {
 					{blogFrom()}
 
 					{blogs.map((blog) => (
-						<Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+						<Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} />
 					))}
 				</div>
 			)}
