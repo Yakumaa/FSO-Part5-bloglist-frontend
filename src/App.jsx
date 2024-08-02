@@ -86,7 +86,7 @@ const App = () => {
 		try {
 			await blogService.deleteBlog(id)
 			setBlogs(sortBlogs(blogs.filter((blog) => blog.id !== id)))
-			setMessage(`Blog deleted`)
+			setMessage('Blog deleted')
 			setMessageType('success')
 			setTimeout(() => {
 				setMessage(null)
@@ -116,7 +116,7 @@ const App = () => {
 			setPassword('')
 		} catch (exception) {
 			console.log('Wrong credentials')
-			setMessage(`Wrong username or password`)
+			setMessage('Wrong username or password')
 			setMessageType('error')
 			setTimeout(() => {
 				setMessage(null)
