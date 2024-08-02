@@ -35,7 +35,7 @@ const App = () => {
 	useEffect(() => {
 		blogService.getAll().then((blogs) => {
 			console.log(blogs)
-			setBlogs(blogs)
+			setBlogs(sortBlogs(blogs))
 		})
 	}, [])
 
@@ -72,7 +72,7 @@ const App = () => {
 	const updateBlog = async (id, blogObject) => {
 		try {
 			const returnedBlog = await blogService.edit(id, blogObject)
-			setBlogs(blogs.map((blog) => (blog.id !== id ? blog : { ...returnedBlog, user: blog.user })))
+			setBlogs(sortBlogs(blogs.map((blog) => (blog.id !== id ? blog : { ...returnedBlog, user: blog.user }))))
 		} catch (exception) {
 			setMessage(`Error updating blog: ${exception}`)
 			setMessageType('error')
@@ -142,6 +142,10 @@ const App = () => {
 			<BlogForm createBlog={addBlog} />
 		</Togglable>
 	)
+
+	const sortBlogs = (blogs) => {
+		return blogs.sort((a, b) => b.likes - a.likes)
+	}
 
 	return (
 		<div>
