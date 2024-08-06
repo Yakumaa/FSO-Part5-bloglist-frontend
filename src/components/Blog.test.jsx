@@ -31,4 +31,16 @@ describe('Blog component tests', () => {
 		expect(div).toHaveTextContent('http://test.url')
 		expect(div).toHaveTextContent('likes: 0')
 	})
+
+	test('clicking like button twice calls event handler twice', async () => {
+		const mockHandler = vi.fn()
+		render(<Blog blog={blog} updateBlog={mockHandler} user={user} />).container
+
+		const testUser = userEvent.setup()
+		const button = screen.getByText('like')
+		await testUser.click(button)
+		await testUser.click(button)
+
+		expect(mockHandler.mock.calls).toHaveLength(2)
+	})
 })

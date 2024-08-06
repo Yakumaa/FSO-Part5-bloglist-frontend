@@ -41,7 +41,7 @@ const create = async (newObject) => {
 }
 
 const edit = async (id, editObject) => {
-	const response = await axios.put(`${baseUrl}/${id}`, editObject, config)
+	const response = await axios.put(`${baseUrl}/${id}`, editObject)
 	return response.data
 }
 

@@ -31,13 +31,14 @@ const App = () => {
 	const [message, setMessage] = useState(null)
 	const [messageType, setMessageType] = useState('')
 	const [loginVisible, setLoginVisible] = useState(false)
+	const [refreshBlog, setRefreshBlog] = useState(false)
 
 	useEffect(() => {
 		blogService.getAll().then((blogs) => {
 			console.log(blogs)
 			setBlogs(sortBlogs(blogs))
 		})
-	}, [])
+	}, [refreshBlog])
 
 	useEffect(() => {
 		const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -56,6 +57,7 @@ const App = () => {
 				setBlogs(blogs.concat(returnedBlog))
 				setMessage(`A new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
 				setMessageType('success')
+				setRefreshBlog(!refreshBlog)
 				setTimeout(() => {
 					setMessage(null)
 				}, 5000)
@@ -73,6 +75,7 @@ const App = () => {
 		try {
 			const returnedBlog = await blogService.edit(id, blogObject)
 			setBlogs(sortBlogs(blogs.map((blog) => (blog.id !== id ? blog : { ...returnedBlog, user: blog.user }))))
+			setRefreshBlog(!refreshBlog)
 		} catch (exception) {
 			setMessage(`Error updating blog: ${exception}`)
 			setMessageType('error')
@@ -86,6 +89,7 @@ const App = () => {
 		try {
 			await blogService.deleteBlog(id)
 			setBlogs(sortBlogs(blogs.filter((blog) => blog.id !== id)))
+			setRefreshBlog(!refreshBlog)
 			setMessage('Blog deleted')
 			setMessageType('success')
 			setTimeout(() => {
