@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import { expect } from 'vitest'
 
 describe('Blog component tests', () => {
 	let blog = {
@@ -17,7 +18,17 @@ describe('Blog component tests', () => {
 
 	test('renders content', () => {
 		const component = render(<Blog blog={blog} user={user} />).container
-		const div = component.querySelector('.blog')
+		const div = component.querySelector('.whenHidden')
 		expect(div).toHaveTextContent('Test title Test author')
+	})
+
+	test('renders content after clicking view button', () => {
+		const component = render(<Blog blog={blog} user={user} />).container
+		const button = screen.getByText('view')
+		userEvent.click(button)
+
+		const div = component.querySelector('.whenShown')
+		expect(div).toHaveTextContent('http://test.url')
+		expect(div).toHaveTextContent('likes: 0')
 	})
 })
