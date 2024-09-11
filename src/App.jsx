@@ -180,7 +180,9 @@ const App = () => {
 			) : (
 				<div>
 					<p>{user.name} logged-in</p>
-					<button onClick={handleLogout}>logout</button>
+					<button id="logout" onClick={handleLogout}>
+						logout
+					</button>
 					{blogFrom()}
 
 					{blogs.map(
