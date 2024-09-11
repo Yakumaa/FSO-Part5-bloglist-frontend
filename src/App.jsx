@@ -18,7 +18,9 @@ const Notification = ({ message, type }) => {
 
 	return (
 		<>
-			<div className={className}>{message}</div>
+			<div id="notification" className={className}>
+				{message}
+			</div>
 		</>
 	)
 }
@@ -181,9 +183,14 @@ const App = () => {
 					<button onClick={handleLogout}>logout</button>
 					{blogFrom()}
 
-					{blogs.map((blog) => (
-						<Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} />
-					))}
+					{blogs.map(
+						(blog) => {
+							console.log(blog)
+							return <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} />
+						}
+
+						// <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} />
+					)}
 				</div>
 			)}
 		</div>
